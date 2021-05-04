@@ -26,13 +26,13 @@ Things you may want to cover:
 ## users テーブル
 | Column             | Type    | Options                    |
 | ------------------ | ------- | -------------------------- |
-| nickname           | String  | null: false                |
-| email              | String  | null: false, unique: true  |
-| encrypted_password | String  | null: false                |
-| first_name_kanji   | String  | null: false                |
-| last_name_kanji    | String  | null: false                |
-| first_name_kana    | String  | null: false                |
-| lase_name_kana     | String  | null: false                |
+| nickname           | string  | null: false                |
+| email              | string  | null: false, unique: true  |
+| encrypted_password | string  | null: false                |
+| first_name_kanji   | string  | null: false                |
+| last_name_kanji    | string  | null: false                |
+| first_name_kana    | string  | null: false                |
+| lase_name_kana     | string  | null: false                |
 | birthday           | date    | null: false                |
 
 ### Association
@@ -42,17 +42,17 @@ Things you may want to cover:
 
 ## items テーブル
 
-| Column           | Type       | Options                         |
-| ---------------- | ---------- | ------------------------------- |
-| name             | String     | null: false                     |
-| description      | text       | null: false                     |
-| category_id      | integer    | null: false                     |
-| status_id        | integer    | null: false                     |
-| charge_id        | integer    | null: false                     |
-| area_id          | integer    | null: false                     |
-| day_id           | integer    | null: false                     |
-| price            | integer    | null: false                     |
-| user             | references | null: false, foreign_keys: true |
+| Column                  | Type       | Options                         |
+| ----------------------- | ---------- | ------------------------------- |
+| name                    | string     | null: false                     |
+| description             | text       | null: false                     |
+| category_id             | integer    | null: false                     |
+| status_id               | integer    | null: false                     |
+| charge_id               | integer    | null: false                     |
+| prefecture_id           | integer    | null: false                     |
+| day_id                  | integer    | null: false                     |
+| price                   | integer    | null: false                     |
+| user                    | references | null: false, foreign_keys: true |
 
 ### Association
 - belongs_to :user
@@ -79,8 +79,8 @@ Things you may want to cover:
 | prefecture_id       | integer    | null: false                     |
 | municipalities      | string     | null: false                     |
 | address             | string     | null: false                     |
-| building            | string     | null: false                     |
-| phone_number        | integer    | null: false                     |
+| building            | string     |                                 |
+| phone_number        | string     | null: false                     |
 | purchase            | references | null: false, foreign_keys: true |
 
 ### Association
