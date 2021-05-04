@@ -24,16 +24,16 @@ Things you may want to cover:
 * ...
 
 ## users テーブル
-| Column           | Type    | Options      |
-| ---------------- | ------- | ------------ |
-| nickname         | String  | null: false  |
-| email            | String  | null: false  |
-| password         | String  | null: false  |
-| first_name_kanji | String  | null: false  |
-| last_name_kanji  | String  | null: false  |
-| first_name_kana  | String  | null: false  |
-| lase_name_kana   | String  | null: false  |
-| birthday         | date    | null: false  |
+| Column             | Type    | Options                    |
+| ------------------ | ------- | -------------------------- |
+| nickname           | String  | null: false                |
+| email              | String  | null: false, unique: true  |
+| encrypted_password | String  | null: false                |
+| first_name_kanji   | String  | null: false                |
+| last_name_kanji    | String  | null: false                |
+| first_name_kana    | String  | null: false                |
+| lase_name_kana     | String  | null: false                |
+| birthday           | date    | null: false                |
 
 ### Association
 - has_many :items
@@ -42,16 +42,17 @@ Things you may want to cover:
 
 ## items テーブル
 
-| Column           | Type    | Options      |
-| ---------------- | ------- | ------------ |
-| name             | String  | null: false  |
-| description      | text    | null: false  |
-| category         | String  | null: false  |
-| status           | String  | null: false  |
-| delivery_charge  | String  | null: false  |
-| delivery_area    | String  | null: false  |
-| delivery_day     | String  | null: false  |
-| price            | integer | null: false  |
+| Column           | Type       | Options                         |
+| ---------------- | ---------- | ------------------------------- |
+| name             | String     | null: false                     |
+| description      | text       | null: false                     |
+| category_id      | integer    | null: false                     |
+| status_id        | integer    | null: false                     |
+| charge_id        | integer    | null: false                     |
+| area_id          | integer    | null: false                     |
+| day_id           | integer    | null: false                     |
+| price            | integer    | null: false                     |
+| user             | references | null: false, foreign_keys: true |
 
 ### Association
 - belongs_to :user
@@ -62,24 +63,25 @@ Things you may want to cover:
 
 | Column           | Type       | Options                         |
 | ---------------- | ---------- | ------------------------------- |
-| user_id          | references | null: false, foreign_keys: true |
-| item_id          | references | null: false, foreign_keys: true |
+| user             | references | null: false, foreign_keys: true |
+| item             | references | null: false, foreign_keys: true |
 
 ### Association
 - belongs_to :user
 - belongs_to :item
+- has_one    :delivery
 
-## purchases テーブル
+## deliveries テーブル
 
-| Column           | Type       | Options                         |
-| ---------------- | ---------- | ------------------------------- |
-| postal code      | integer    | null: false                     |
-| prefecture       | string     | null: false                     |
-| municipalities   | string     | null: false                     |
-| address          | string     | null: false                     |
-| phone_number     | integer    | null: false                     |
-| purchase_id      | references | null: false, foreign_keys: true |
+| Column              | Type       | Options                         |
+| ------------------- | ---------- | ------------------------------- |
+| postal_code         | string     | null: false                     |
+| prefecture_id       | integer    | null: false                     |
+| municipalities      | string     | null: false                     |
+| address             | string     | null: false                     |
+| building            | string     | null: false                     |
+| phone_number        | integer    | null: false                     |
+| purchase            | references | null: false, foreign_keys: true |
 
 ### Association
-- belongs_to :user
-- belongs_to :item
+- belongs_to :purchase
