@@ -91,5 +91,10 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
     end
 
+    it 'emailに@がないと登録できないこと' do
+      @user.email = 'aaagmail.com'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid")
+    end
   end
 end
