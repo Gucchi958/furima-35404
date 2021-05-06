@@ -5,13 +5,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   with_options presence: true do
-    validates :nickname,           presence: true
-    validates :password,           presence: true, format: { with: /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i, message: "は6文字以上かつ英数字をそれぞれ含めてください" }
-    validates :birthday,           presence: true
+    validates :nickname        
+    validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,100}+\z/i, message: "は6文字以上かつ半角英数字をそれぞれ含めてください" }
+    validates :birthday
 
     with_options format: { with: /\A[ぁ-ゔァ-ヴ\p{Ideographic}ａ-ｚＡ-Ｚ０-９]+\z/, message: 'に全角文字を使用してください' } do
-      validates :first_name_kanji,   presence: true
-      validates :last_name_kanji,    presence: true
+      validates :first_name_kanji
+      validates :last_name_kanji
     end
 
     with_options format: { with: /\A[\p{katakana}\p{blank}ー－]+\z/, message: 'はカタカナで入力して下さい。'} do
