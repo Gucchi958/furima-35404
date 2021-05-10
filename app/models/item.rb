@@ -18,7 +18,7 @@ class Item < ApplicationRecord
       validates :price
     end
 
-    with_options numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'Out of setting range' } do
+    with_options numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は300~9999999の範囲内で入力して下さい' } do
       validates :price
     end
     

@@ -63,25 +63,37 @@ RSpec.describe Item, type: :model do
       it '販売価格の情報が必須であること' do
         @item.price = ""
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank", "Price Out of setting range")
+        expect(@item.errors.full_messages).to include("Price can't be blank")
       end
 
       it '販売価格は半角数字のみ登録可能であること' do
-        @item.price = "１００００"
+        @item.price = '１００００'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price は半角数字で入力して下さい")
       end
 
-      it '販売価格300円以下は登録できない' do
-        @item.price = 150
+      it '半角英数混合では登録できないこと' do
+        @item.price = '1a1a1a1'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price Out of setting range")
+        expect(@item.errors.full_messages).to include("Price は半角数字で入力して下さい")
       end
 
-      it '販売価格9,999,999円以上は登録できない' do
+      it '半角英語だけでは登録できないこと' do
+        @item.price = 'aaaaaa'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price は半角数字で入力して下さい")
+      end
+
+      it '販売価格299円以下は登録できない、または販売価格300円未満は登録できない' do
+        @item.price = 150
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price は300~9999999の範囲内で入力して下さい")
+      end
+
+      it '販売価格10,000,000円以上は登録できない' do
         @item.price = 10000000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price Out of setting range")
+        expect(@item.errors.full_messages).to include("Price は300~9999999の範囲内で入力して下さい")
       end
 
       it '商品画像が必須であること' do
