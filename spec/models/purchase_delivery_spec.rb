@@ -6,6 +6,8 @@ RSpec.describe PurchaseDelivery, type: :model do
       @user = FactoryBot.create(:user)
       @item = FactoryBot.build(:item)
       @item.image = fixture_file_upload("/files/test_image.jpg")
+      @item.save
+      sleep(0.1)
       @purchase_delivery = FactoryBot.build(:purchase_delivery, user_id: @user, item_id: @item)
     end
     
@@ -39,7 +41,7 @@ RSpec.describe PurchaseDelivery, type: :model do
       end
 
       it 'prefecture_idが0では保存できないこと' do
-        @purchase_delivery.prefecture_id = '0'
+        @purchase_delivery.prefecture_id = 0
         @purchase_delivery.valid?
         expect(@purchase_delivery.errors.full_messages).to include("Prefecture は---以外を選択して下さい")
       end
@@ -70,6 +72,12 @@ RSpec.describe PurchaseDelivery, type: :model do
 
       it 'phone_numberは11桁以内の数値でないと保存できないこと' do
         @purchase_delivery.phone_number = '12345'
+        @purchase_delivery.valid?
+        expect(@purchase_delivery.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it 'phone_numberは11桁を超えると保存できないこと' do
+        @purchase_delivery.phone_number = '123456789123'
         @purchase_delivery.valid?
         expect(@purchase_delivery.errors.full_messages).to include("Phone number is invalid")
       end
