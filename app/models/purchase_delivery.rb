@@ -10,7 +10,7 @@ class PurchaseDelivery < ApplicationRecord
     validates :municipalities
     validates :address
     validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/ }
-    validates :phone_number, format: {with: /\A[0-9]{11}\z/ }
+    validates :phone_number, format: {with: /\A[0-9]{10,11}\z/ }
     validates :token
 
     with_options numericality: {other_than: 0, message: "は---以外を選択して下さい" } do

@@ -1,8 +1,9 @@
 class PurchasesController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
   before_action :move_to_index, only: [:index, :create]
   before_action :move_to_index2, only: [:index, :create]
-  before_action :move_to_index3, only: [:index, :create]
-  before_action :set_item, only: [:index, :create]
+  
 
   def index
     @purchase_delivery = PurchaseDelivery.new
@@ -24,25 +25,16 @@ class PurchasesController < ApplicationController
   def purchase_params
     params.require(:purchase_delivery).permit(:postal_code, :prefecture_id, :municipalities, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
-  
-  #ログインしていないと購入画面にいけない
-  def move_to_index
-    unless user_signed_in? 
-       redirect_to new_user_session_path
-    end
-  end
 
   #出品者は自分の商品購入画面にいけない
-  def move_to_index2
-    @item = Item.find(params[:item_id])
+  def move_to_index
     if current_user.id == @item.user_id
       redirect_to root_path
     end
   end
 
   #ログインしているユーザーは売却済み商品の購入ページにはいけない
-  def move_to_index3
-    @item = Item.find(params[:item_id])
+  def move_to_index2
     if  @item.purchase.present?
       redirect_to root_path
     end
