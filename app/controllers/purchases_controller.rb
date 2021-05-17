@@ -2,14 +2,13 @@ class PurchasesController < ApplicationController
   before_action :move_to_index, only: [:index, :create]
   before_action :move_to_index2, only: [:index, :create]
   before_action :move_to_index3, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     @purchase_delivery = PurchaseDelivery.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @purchase_delivery = PurchaseDelivery.new(purchase_params)
     if @purchase_delivery.valid?
       pay_item
@@ -47,6 +46,10 @@ class PurchasesController < ApplicationController
     if  @item.purchase.present?
       redirect_to root_path
     end
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
 

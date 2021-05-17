@@ -14,6 +14,11 @@ RSpec.describe PurchaseDelivery, type: :model do
         expect(@purchase_delivery).to be_valid
       end
 
+      it 'buildingは空でも保存できること' do
+        @purchase_delivery.building = ''
+        expect(@purchase_delivery).to be_valid
+      end
+
       it 'tokenがあれば保存ができること' do
         expect(@purchase_delivery).to be_valid
       end
@@ -49,11 +54,6 @@ RSpec.describe PurchaseDelivery, type: :model do
         @purchase_delivery.address = ''
         @purchase_delivery.valid?
         expect(@purchase_delivery.errors.full_messages).to include("Address can't be blank")
-      end
-
-      it 'buildingは空でも保存できること' do
-        @purchase_delivery.building = ''
-        expect(@purchase_delivery).to be_valid
       end
 
       it 'phone_numberが空だと保存できないこと' do

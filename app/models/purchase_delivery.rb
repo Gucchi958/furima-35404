@@ -24,9 +24,6 @@ class PurchaseDelivery < ApplicationRecord
     Delivery.create(postal_code: postal_code, prefecture_id: prefecture_id, municipalities: municipalities, address: address, building: building, phone_number: phone_number, purchase_id: purchase.id)
   end
 
-  extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :prefecture
-
 end
 
 
