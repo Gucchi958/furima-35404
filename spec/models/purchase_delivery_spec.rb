@@ -82,6 +82,12 @@ RSpec.describe PurchaseDelivery, type: :model do
         expect(@purchase_delivery.errors.full_messages).to include("Phone number is invalid")
       end
 
+      it 'phone_numberは英数混合では保存できないこと' do
+        @purchase_delivery.phone_number = '1a1a1a1a1a1'
+        @purchase_delivery.valid?
+        expect(@purchase_delivery.errors.full_messages).to include("Phone number is invalid")
+      end
+
       it 'userが紐付いていないと保存できないこと' do
         @purchase_delivery.user_id = nil
         @purchase_delivery.valid?

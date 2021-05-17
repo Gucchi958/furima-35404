@@ -2,7 +2,6 @@ class PurchasesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :move_to_index
-  before_action :move_to_index2
   
 
   def index
@@ -28,14 +27,7 @@ class PurchasesController < ApplicationController
 
   #出品者は自分の商品購入画面にいけない
   def move_to_index
-    if current_user.id == @item.user_id
-      redirect_to root_path
-    end
-  end
-
-  #ログインしているユーザーは売却済み商品の購入ページにはいけない
-  def move_to_index2
-    if  @item.purchase.present?
+    if current_user.id == @item.user_id || @item.purchase.present?
       redirect_to root_path
     end
   end
