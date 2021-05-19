@@ -25,7 +25,7 @@ class PurchasesController < ApplicationController
     params.require(:purchase_delivery).permit(:postal_code, :prefecture_id, :municipalities, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
-  #出品者は自分の商品購入画面にいけない
+
   def move_to_index
     if current_user.id == @item.user_id || @item.purchase.present?
       redirect_to root_path
