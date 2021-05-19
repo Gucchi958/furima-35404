@@ -17,11 +17,11 @@ class Item < ApplicationRecord
     with_options numericality: { with: /\A[0-9]+\z/, message: 'は半角数字で入力して下さい' } do
       validates :price
     end
-
-    with_options numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は300~9999999の範囲内で入力して下さい' } do
-      validates :price
-    end
     
+  end
+
+  with_options numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は300~9999999の範囲内で入力して下さい' } do
+    validates :price
   end
 
   belongs_to :user
